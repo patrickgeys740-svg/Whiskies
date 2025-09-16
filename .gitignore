@@ -1,0 +1,24 @@
+﻿# Python & IDE
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.vscode/
+.idea/
+*.log
+.env
+
+# gegenereerde output/data
+klassement/output/
+klassement/data/
+*.pdf
+
+# OS/Editor rommel
+.DS_Store
+Thumbs.db
+
+# Excel lockfiles
+~$*.xlsm
+
+# optioneel: meegeleverde binaries
+klassement/bin/

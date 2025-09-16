@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner + Kaart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="input-container">
+        <h1>Barcode Scanner</h1>
+
+        <form method="post">
+            <label for="barcode">Barcode:</label>
+            <input type="text" id="barcode" name="barcode" autocomplete="off" required>
+
+            <label for="aantal">Aantal:</label>
+            <input type="number" id="aantal" name="aantal" autocomplete="off" required>
+
+            <button type="submit">Verwerken</button>
+        </form>
+
+        <!-- Getrokken kaart -->
+        <div class="drawn-card">
+            <img id="card-image" src="" alt="Kaart" style="display: none;">
+        </div>
+    </div>
+
+    <div class="scanned-container">
+        <h2>Gescannde Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Volledige Naam</th>
+                    <th>Aantal</th>
+                    <th>Actie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in scanned_data %}
+                    <tr>
+                        <td>{{ item.barcode }}</td>
+                        <td>{{ item.naam }}</td>
+                        <td>{{ item.aantal }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('remove_entry') }}">
+                                <input type="hidden" name="barcode" value="{{ item.barcode }}">
+                                <input type="hidden" name="aantal" value="{{ item.aantal }}">
+                                <button type="submit">Verwijderen</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="total-container">
+        <h2>Totaal aantal scans: {{ total_scans }}</h2>
+    </div>
+
+    <script>
+        window.onload = function () {
+            const barcodeInput = document.getElementById("barcode");
+            const aantalInput = document.getElementById("aantal");
+            const form = document.querySelector("form");
+            const cardImage = document.getElementById("card-image");
+
+            barcodeInput.focus();
+
+            barcodeInput.addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    aantalInput.focus();
+                    aantalInput.select();
+                }
+            });
+
+            aantalInput.addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    drawCard();
+                    setTimeout(() => {
+                        form.submit();
+                    }, 400);
+                }
+            });
+
+            function drawCard() {
+                const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
+                const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king'];
+
+                const suit = suits[Math.floor(Math.random() * suits.length)];
+                const value = values[Math.floor(Math.random() * values.length)];
+
+                const filename = `${value}_of_${suit}.png`;
+                const filepath = `/static/cards/${filename}`;
+
+                cardImage.src = filepath;
+                cardImage.classList.add('show');
+                cardImage.style.display = 'inline-block';
+
+                // Verberg animatie na 1.5 seconden
+                setTimeout(() => {
+                    cardImage.classList.remove('show');
+                }, 1500);
+            }
+        };
+    </script>
+</body>
+</html>

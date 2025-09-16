@@ -1,0 +1,91 @@
+body {
+    background-color: rgb(158, 196, 211);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.input-container {
+    color: blanchedalmond;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgb(8, 53, 73);
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.scanned-container {
+    font-size: smaller;
+    margin-top: 200px;
+    padding: 30px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 4px;
+    text-align: left;
+}
+
+.total-container {
+    padding: 10px;
+    background-color: rgb(8, 53, 73);
+    color: blanchedalmond;
+}
+
+h2 {
+    margin: 0;
+}
+
+h1 {
+    background-color: orangered;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+/* Kaart afbeelding bij scan */
+/* .drawn-card {
+    text-align: center;
+    margin-top: 20px;
+} */
+ .drawn-card {
+    margin-top: 20px;
+    margin-left: 500px; /* schuif naar rechts */
+}
+
+
+.drawn-card img {
+    width: 80px; /* of 60px, 100px, wat jij wilt */
+    height: auto;
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.4s ease;
+
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+}
+
+.drawn-card img.show {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+}
